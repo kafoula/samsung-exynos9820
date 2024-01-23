@@ -103,7 +103,29 @@ jobs:
       - name: Deploy Toolchain
         if: env.TOOLCHAIN != 'system-gcc' && env.TOOLCHAIN != 'system-clang'
         run: git clone --depth 1 -j $(nproc) --branch $TOOLCHAIN --single-branch https://github.com/CruelKernel/samsung-exynos9820-toolchain toolchain
+      
+      - name: ramdisk Build
+        run: rm -f $RDIR/ramdisk/split_img/boot.img-kernel
+             cp $RDIR/arch/arm64/boot/Image $RDIR/ramdisk/split_img/boot.img-kernel
+             echo $BOARD > ramdisk/split_img/boot.img-board
+              rm -f $RDIR/ramdisk/split_img/boot.img-kernel
+              cp $RDIR/arch/arm64/boot/Image $RDIR/ramdisk/split_img/boot.img-kernel
+              echo $BOARD > ramdisk/split_img/boot.img-board
+              # This is kinda ugly hack, we could as well touch .placeholder to all of those
+              mkdir -p $RDIR/ramdisk/ramdisk/debug_ramdisk
+              mkdir -p $RDIR/ramdisk/ramdisk/dev
+              mkdir -p $RDIR/ramdisk/ramdisk/mnt
+              mkdir -p $RDIR/ramdisk/ramdisk/proc
+              mkdir -p $RDIR/ramdisk/ramdisk/sys
 
+              rm -rf $RDIR/ramdisk/ramdisk/fstab.exynos9820
+              rm -rf $RDIR/ramdisk/ramdisk/fstab.exynos9825
+
+              cp $RDIR/ramdisk/fstab.exynos$SOC$piss $RDIR/ramdisk/ramdisk/fstab.exynos$SOC
+
+              cd $RDIR/ramdisk/
+              ./repackimg.sh --nosudo
+             
       - name: Kernel Build
         run: ./cruelbuild :build
 
