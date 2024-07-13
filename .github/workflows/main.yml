@@ -106,16 +106,7 @@ jobs:
                        +fp_boost                 \
                        +noatime                  \
                        +1000hz                   \
-                       +io_maple                 \
-                       +io_fiops                 \
-                       +io_sio                   \
-                       +io_zen                   \
-                       +io_anxiety               \
-                       +io_noop                  \
-                       +io_cfq                   \
-                       +tcp_cubic                \
-                       +tcp_westwood             \
-                       +performance              \
+                       +io_maple                \
                        +ntfs                     \
                        +sdfat                    \
                        +cifs                     \
