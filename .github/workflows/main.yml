@@ -168,7 +168,7 @@ jobs:
           if-no-files-found: error
 
       - name: Upload Kernel Info
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ConfigurationInfo-${{ matrix.model }}
           path: config.*
